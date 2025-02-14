@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Animation Dashboard</title>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <!-- Dashboard Specific Styles -->
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2 class="logo">
+          <i class="fas fa-cube"></i>
+          <span class="logo-text">AnimDash</span>
+        </h2>
+      </div>
+      <ul class="nav-links">
+        <li class="nav-item">
+          <a href="#dashboard" class="nav-link active">
+            <i class="fas fa-home"></i>
+            <span class="nav-text">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#featured" class="nav-link">
+            <i class="fas fa-star"></i>
+            <span class="nav-text">Featured</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#collections" class="nav-link">
+            <i class="fas fa-folder"></i>
+            <span class="nav-text">Collections</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#settings" class="nav-link">
+            <i class="fas fa-cog"></i>
+            <span class="nav-text">Settings</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <h1>Animation Dashboard</h1>
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search animations...">
+        </div>
+      </header>
+
+      <div class="grid-container" id="gridContainer">
+        <!-- Grid items will be injected here -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Animation Data and Main Application Logic -->
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Initialize Theme and Router Modules -->
+  <script type="module">
+    import { themeManager } from './js/utils/theme.js';
+    themeManager.init();
+
+    import { router } from './js/utils/router.js';
+    router.init();
+  </script>
+</body>
+</html>

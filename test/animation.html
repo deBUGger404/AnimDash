@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Animation Detail</title>
+   <style>
+      /* Reset & Base Styles */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+         font-family: Arial, sans-serif;
+         background-color: #f0f0f0;
+         color: #333;
+         padding: 20px;
+      }
+      header { margin-bottom: 20px; }
+      /* Enhanced Back to Dashboard button */
+      header a {
+         text-decoration: none;
+         background: #3498db;
+         color: #fff;
+         font-size: 16px;
+         padding: 10px 15px;
+         border-radius: 5px;
+         transition: background 0.3s ease;
+      }
+      header a:hover {
+         background: #2980b9;
+      }
+      .container {
+         max-width: 1200px;
+         margin: 0 auto;
+         background: #fff;
+         border-radius: 8px;
+         padding: 20px;
+         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .top-section {
+         display: flex;
+         gap: 20px;
+         margin-bottom: 20px;
+      }
+      .preview-box {
+         flex: 1;
+         border: 1px solid #ddd;
+         border-radius: 8px;
+         overflow: hidden;
+         height: 400px;
+      }
+      .details-box {
+         flex: 1;
+         padding: 10px;
+      }
+      .details-box h2 {
+         margin-bottom: 10px;
+         font-size: 24px;
+      }
+      .details-box p {
+         margin-bottom: 10px;
+         line-height: 1.6;
+      }
+      .code-section { margin-top: 20px; }
+      .code-header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         margin-bottom: 10px;
+      }
+      .code-header h3 { font-size: 20px; }
+      /* Code container styling with relative positioning */
+      .code-container {
+         position: relative;
+         background: #2d2d2d;
+         color: #f8f8f2;
+         padding: 15px;
+         border-radius: 4px;
+         font-family: "Courier New", Courier, monospace;
+         font-size: 14px;
+         line-height: 1.6;
+         overflow-x: auto;
+         max-height: 400px;
+      }
+      /* Preserve code formatting and indentation */
+      pre, code {
+         white-space: pre-wrap;
+      }
+      /* Copy icon styling in the top left corner of the code box */
+      .copy-icon {
+         position: absolute;
+         top: 10px;
+         right: 10px;
+         background: rgba(0, 0, 0, 0.5);
+         color: #fff;
+         padding: 5px;
+         border-radius: 50%;
+         cursor: pointer;
+         font-size: 18px;
+         transition: background 0.3s ease;
+         z-index: 10;
+      }
+      .copy-icon:hover {
+         background: rgba(0, 0, 0, 0.7);
+      }
+      @media(max-width:768px) {
+         .top-section { flex-direction: column; }
+      }
+   </style>
+</head>
+<body>
+   <header>
+      <a href="index.html">&larr; Back to Dashboard</a>
+   </header>
+   <div class="container">
+      <div class="top-section">
+         <!-- Animation Preview -->
+         <div class="preview-box">
+            <iframe id="animationPreview" src="" style="width:100%; height:100%; border:0;"></iframe>
+         </div>
+         <!-- Animation Details -->
+         <div class="details-box">
+            <h2 id="animationTitle">Animation Title</h2>
+            <p id="animationDescription">Animation Description</p>
+            <div id="animationTechnicalDetails"></div> <!-- Technical Details Section -->
+         </div>
+      </div>
+      <!-- Code Section -->
+      <div class="code-section">
+         <div class="code-header">
+            <h3>Code</h3>
+         </div>
+         <div class="code-container">
+            <!-- Copy icon placed in the top left corner -->
+            <span class="copy-icon" id="copyIcon" title="Copy Code">&#128203;</span>
+            <pre><code id="codeContent">// Code will be displayed here</code></pre>
+         </div>
+      </div>
+   </div>
+
+   <script>
+     (function(){
+       'use strict';
+
+       // Define the animations array with codePath and technicalDetails properties.
+       const animations = [
+         {
+            id: "letterRain",
+            name: "Letter Rain Simulation",
+            description: "A realistic simulation where letters fall like rain and merge into the ground using Matter.js.",
+            preview: "letter_drop_animation.html",
+            codePath: "letter_drop_animation.html",
+            technicalDetails: `
+               <div class="technical-details" style="background: #f7f7f7; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                  <h3 style="color: #3498db; margin-bottom: 10px;">Technical Details</h3>
+                  <ul style="list-style: none; padding-left: 0; line-height: 1.6;">
+                     <li><strong>Physics Used:</strong> Gravity, Collision, Motion</li>
+                     <li><strong>Technology:</strong> Matter.js, HTML5 Canvas, JavaScript</li>
+                     <li><strong>Effects:</strong> Realistic falling letters, collisions with ground, bouncing and stacking effects</li>
+                     <li><strong>Performance:</strong> Optimized for smooth animations and responsiveness</li>
+                     <li><strong>Browser Support:</strong> Compatible with all modern browsers</li>
+                     <li><strong>Interactivity:</strong> Real-time user interaction and dynamic simulation adjustments</li>
+                  </ul>
+               </div>
+            `
+         },
+         {
+            id: "fallingLetters",
+            name: "Falling Letters Simulation",
+            description: "An engaging simulation of falling letters with realistic physics and elegant motion.",
+            preview: "previews/fallingLetters.html",
+            codePath: "code/fallingLetters.js",
+            technicalDetails: "" // Additional details can be added here.
+         }
+       ];
+
+       /**
+        * Retrieves the value of a query parameter from the URL.
+        */
+       function getQueryParam(name) {
+         const urlParams = new URLSearchParams(window.location.search);
+         return urlParams.get(name);
+       }
+
+       /**
+        * Loads the animation details based on the query parameter.
+        */
+       function loadAnimation() {
+         try {
+           const animId = getQueryParam('id');
+           if (!animId) {
+             throw new Error('No animation id provided in URL.');
+           }
+           const animation = animations.find(anim => anim.id === animId);
+           if (!animation) {
+             throw new Error('Animation not found: ' + animId);
+           }
+           
+           // Populate the page with the animation's data.
+           document.getElementById('animationTitle').textContent = animation.name;
+           document.getElementById('animationDescription').textContent = animation.description;
+           document.getElementById('animationPreview').src = animation.preview;
+           document.getElementById('animationTechnicalDetails').innerHTML = animation.technicalDetails || "";
+
+           // Load code from the file specified by codePath and display it exactly as it is.
+           if (animation.codePath) {
+             fetch(animation.codePath)
+               .then(response => response.ok ? response.text() : Promise.reject("Error loading code."))
+               .then(data => {
+                 document.getElementById('codeContent').innerText = data;
+               })
+               .catch(err => {
+                 console.error('Error loading code from file:', err);
+                 document.getElementById('codeContent').innerText = "Error loading code.";
+               });
+           }
+         } catch(error) {
+           console.error('Error loading animation:', error);
+           document.querySelector('.container').innerHTML = `<p>Error loading animation details: ${error.message}</p>`;
+         }
+       }
+
+       /**
+        * Copies the code snippet to the clipboard.
+        */
+       function copyCode() {
+         const codeText = document.getElementById('codeContent').innerText;
+         navigator.clipboard.writeText(codeText).then(() => {
+         //   alert('Code copied to clipboard!');
+         }).catch(() => {
+           alert('Failed to copy code.');
+         });
+       }
+
+       // Set up event listeners.
+       document.getElementById('copyIcon').addEventListener('click', copyCode);
+       document.addEventListener('DOMContentLoaded', loadAnimation);
+     })();
+   </script>
+</body>
+</html>

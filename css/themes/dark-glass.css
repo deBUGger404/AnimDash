@@ -1,0 +1,52 @@
+/* Dark Glass Theme */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #95a5a6;
+    --text-color: #ecf0f1;
+    --light-text: #fff;
+    --glass-bg: rgba(236, 240, 241, 0.1);
+    --glass-border: rgba(236, 240, 241, 0.2);
+    --hover-color: rgba(189, 195, 199, 0.2);
+}
+
+/* Glass Effect Overrides */
+.sidebar,
+.header,
+.grid-item {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.sidebar {
+    background: rgba(44, 62, 80, 0.7);
+}
+
+.header {
+    background: rgba(44, 62, 80, 0.7);
+}
+
+.grid-item {
+    background: rgba(44, 62, 80, 0.7);
+}
+
+/* Enhanced Hover Effects */
+.nav-link:hover {
+    background: var(--hover-color);
+    transform: translateX(5px);
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark Mode Specific Adjustments */
+.search-bar input {
+    background: rgba(236, 240, 241, 0.1);
+    color: var(--light-text);
+}
+
+.search-bar input::placeholder {
+    color: rgba(236, 240, 241, 0.6);
+}

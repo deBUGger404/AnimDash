@@ -1,0 +1,58 @@
+/* css/dashboard.css */
+/* Dashboard Specific Styles (Optional enhancements) */
+.dashboard {
+    /* Additional spacing or layout modifications if needed */
+  }
+  
+  .sidebar.collapsed {
+    width: 80px;
+  }
+  
+  .error-message {
+    color: #ff6b6b;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .preview-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+  }
+  
+  .preview-content {
+    background: #1f1f1f;
+    padding: 1rem;
+    border-radius: 8px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    position: relative;
+  }
+  
+  .preview-content iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+    border-radius: 8px;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+  }
+  

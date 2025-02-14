@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Rain Animation</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+    <!-- Matter.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="animation-container">
+        <!-- Header -->
+        <div class="animation-header">
+            <a href="../../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Dashboard</span>
+            </a>
+            <h1 class="title">Letter Rain Animation</h1>
+            <div class="controls">
+                <button id="pauseBtn" class="control-btn" title="Pause/Resume">
+                    <i class="fas fa-pause"></i>
+                </button>
+                <button id="resetBtn" class="control-btn" title="Reset">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <button id="fullscreenBtn" class="control-btn" title="Fullscreen">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button id="viewCodeBtn" class="control-btn" title="View Code">
+                    <i class="fas fa-code"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Canvas Container -->
+        <div id="canvas-container"></div>
+
+        <!-- Code Panel -->
+        <div class="code-panel" id="codePanel">
+            <div class="code-panel-header">
+                <div class="code-tabs">
+                    <button class="code-tab active" data-lang="html">HTML</button>
+                    <button class="code-tab" data-lang="css">CSS</button>
+                    <button class="code-tab" data-lang="js">JS</button>
+                </div>
+                <button class="close-code-panel" id="closeCodePanel">&times;</button>
+            </div>
+            <div class="code-content">
+                <button class="copy-code-btn" id="copyCodeBtn">
+                    <i class="fas fa-copy"></i>
+                    <span>Copy</span>
+                </button>
+                <pre><code id="codeDisplay"></code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
