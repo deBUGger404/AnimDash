@@ -1,0 +1,200 @@
+"use strict";
+// Matter.js module aliases
+const { Engine, Render, Runner, Bodies, Body, Composite, Events } = Matter;
+
+// Create Engine & World
+const engine = Engine.create();
+const world = engine.world;
+
+// Renderer Setup
+const width = window.innerWidth;
+const height = window.innerHeight;
+const render = Render.create({
+  element: document.getElementById("canvas-container"),
+  engine: engine,
+  options: {
+    width: width,
+    height: height,
+    wireframes: false,
+    background: "rgb(44, 62, 80)",
+  },
+});
+Render.run(render);
+
+// Runner Setup
+const runner = Runner.create();
+Runner.run(runner, engine);
+
+// --- HEXAGON CONTAINER ---
+const centerX = width / 2;
+const centerY = height / 2;
+const containerRadius = 200;
+const numSides = 6;
+const wallThickness = 4;
+const walls = [];
+
+for (let i = 0; i < numSides; i++) {
+  const angle1 = (i / numSides) * 2 * Math.PI;
+  const angle2 = ((i + 1) / numSides) * 2 * Math.PI;
+
+  const x1 = centerX + containerRadius * Math.cos(angle1);
+  const y1 = centerY + containerRadius * Math.sin(angle1);
+  const x2 = centerX + containerRadius * Math.cos(angle2);
+  const y2 = centerY + containerRadius * Math.sin(angle2);
+
+  const wallCenterX = (x1 + x2) / 2;
+  const wallCenterY = (y1 + y2) / 2;
+
+  const length = Math.hypot(x2 - x1, y2 - y1);
+  const wallAngle = Math.atan2(y2 - y1, x2 - x1);
+
+  // Make the hexagon visible by using a faint fill color and a white stroke.
+  const wall = Bodies.rectangle(
+    wallCenterX,
+    wallCenterY,
+    length,
+    wallThickness,
+    {
+      isStatic: true,
+      friction: 0.1,
+      restitution: 0.7,
+      render: {
+        fillStyle: "rgba(255,255,255,0.1)",
+        strokeStyle: "#fff",
+        lineWidth: 2,
+      },
+    }
+  );
+  Body.setAngle(wall, wallAngle);
+  walls.push(wall);
+}
+
+const hexagonContainer = Body.create({
+  parts: walls,
+  isStatic: true,
+});
+Composite.add(world, hexagonContainer);
+
+// --- BALLS (Supports Multiple Balls) ---
+let balls = [];
+function createBalls(count) {
+  count = Math.max(1, Math.min(10, count)); // Ensure count is within limits
+
+  // Clear previous balls
+  balls.forEach((ball) => Composite.remove(world, ball));
+  balls = [];
+
+  // Define some nice colors
+  const colors = [
+    "#e74c3c",
+    "#3498db",
+    "#2ecc71",
+    "#f1c40f",
+    "#9b59b6",
+    "#1abc9c",
+    "#e67e22",
+    "#2c3e50",
+  ];
+
+  for (let i = 0; i < count; i++) {
+    const randomX = centerX + Math.random() * 80 - 40;
+    const randomY = centerY + Math.random() * 80 - 40;
+    const randomColor = colors[i % colors.length];
+
+    const ball = Bodies.circle(randomX, randomY, 15, {
+      friction: 0,
+      frictionAir: 0,
+      restitution: 0.8,
+      density: 0.0012,
+      render: { fillStyle: randomColor },
+    });
+
+    balls.push(ball);
+    Composite.add(world, ball);
+  }
+}
+
+// Initialize with 1 ball
+createBalls(1);
+
+// Gravity & Rotation Speed (Dynamic from UI)
+engine.gravity.y = 0.8;
+let angularSpeed = 0.025;
+
+Events.on(engine, "beforeUpdate", function () {
+  Body.rotate(hexagonContainer, angularSpeed);
+});
+
+// Parameter Box Controls
+
+// Gravity Slider
+document.getElementById("gravitySlider").addEventListener("input", (e) => {
+  engine.gravity.y = parseFloat(e.target.value);
+});
+
+// Rotation Slider
+document.getElementById("rotationSlider").addEventListener("input", (e) => {
+  angularSpeed = parseFloat(e.target.value);
+});
+
+// Bounce Slider (updates restitution of each ball)
+document.getElementById("bounceSlider").addEventListener("input", (e) => {
+  const restitution = parseFloat(e.target.value);
+  balls.forEach((ball) => {
+    ball.restitution = restitution;
+  });
+});
+
+// Ball Count Stepper Controls
+const ballCountInput = document.getElementById("ballCountInput");
+const decreaseBallCount = document.getElementById("decreaseBallCount");
+const increaseBallCount = document.getElementById("increaseBallCount");
+
+function updateBallCount(count) {
+  count = Math.max(1, Math.min(10, count));
+  ballCountInput.value = count;
+  createBalls(count);
+}
+
+increaseBallCount.addEventListener("click", () => {
+  let count = parseInt(ballCountInput.value, 10) + 1;
+  updateBallCount(count);
+});
+
+decreaseBallCount.addEventListener("click", () => {
+  let count = parseInt(ballCountInput.value, 10) - 1;
+  updateBallCount(count);
+});
+
+ballCountInput.addEventListener("change", (e) => {
+  const count = parseInt(e.target.value, 10);
+  if (!isNaN(count)) {
+    updateBallCount(count);
+  }
+});
+
+// Reset Parameters Button
+document.getElementById("resetParametersButton").addEventListener("click", () => {
+  document.getElementById("gravitySlider").value = 0.8;
+  document.getElementById("bounceSlider").value = 0.8;
+  document.getElementById("rotationSlider").value = 0.025;
+  ballCountInput.value = 1;
+  engine.gravity.y = 0.8;
+  angularSpeed = 0.025;
+  createBalls(1);
+});
+
+// Handle Window Resize
+window.addEventListener("resize", function () {
+  const newWidth = window.innerWidth;
+  const newHeight = window.innerHeight;
+
+  Render.resize(render, newWidth, newHeight);
+  render.bounds.max.x = newWidth;
+  render.bounds.max.y = newHeight;
+
+  Body.setPosition(hexagonContainer, { x: newWidth / 2, y: newHeight / 2 });
+  balls.forEach((ball) => {
+    Body.setPosition(ball, { x: newWidth / 2, y: newHeight / 2 });
+  });
+});

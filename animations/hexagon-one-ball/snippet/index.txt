@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bouncing Ball in a Rotating Hexagon</title>
+    <!-- Font Awesome (for stepper buttons) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="animation-container">
+      <!-- Canvas Container -->
+      <div id="canvas-container"></div>
+
+      <!-- Parameter Box (always visible) -->
+      <div class="parameter-box" id="parameterBox">
+        <h2>Simulation Settings</h2>
+
+        <div class="slider-group">
+          <label for="gravitySlider">Gravity</label>
+          <input type="range" id="gravitySlider" min="0" max="2" step="0.1" value="0.8" />
+        </div>
+
+        <div class="slider-group">
+          <label for="bounceSlider">Ball Bounce</label>
+          <input type="range" id="bounceSlider" min="0" max="1" step="0.05" value="0.8" />
+        </div>
+
+        <div class="slider-group">
+          <label for="rotationSlider">Rotation Speed</label>
+          <input type="range" id="rotationSlider" min="0.01" max="0.1" step="0.005" value="0.025" />
+        </div>
+
+        <div class="slider-group">
+          <label for="ballCountInput">Number of Balls</label>
+          <div class="stepper">
+            <button id="decreaseBallCount">−</button>
+            <input type="number" id="ballCountInput" min="1" max="10" value="1" />
+            <button id="increaseBallCount">+</button>
+          </div>
+        </div>
+
+        <button id="resetParametersButton">Restart Parameters</button>
+      </div>
+    </div>
+
+    <!-- Matter.js Physics Engine -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+  </body>
+</html>
